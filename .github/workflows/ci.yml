@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  testes:
+    name: Compila e testa (${{ matrix.compilador }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compilador: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rodar os testes
+        run: ./run_tests.sh
+        env:
+          CC: ${{ matrix.compilador }}
